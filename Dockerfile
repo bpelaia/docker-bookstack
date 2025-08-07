@@ -40,11 +40,11 @@ RUN \
     | awk '/tag_name/{print $4;exit}' FS='[""]'); \
   fi && \
   curl -o \
-    /tmp/bookstack.tar.gz -L \
-    "https://github.com/BookStackApp/BookStack/archive/${BOOKSTACK_RELEASE}.tar.gz" && \
-  tar xf \
-    /tmp/bookstack.tar.gz -C \
-    /app/www/ --strip-components=1 && \
+    /tmp/bookstack.zip -L \
+    "https://github.com/bpelaia/BookStack/archive/refs/heads/custom_release.zip"&& \
+  unzip /tmp/bookstack.zip -d /app/www/ && \
+  mv /app/www/BookStack-custom_release/.env* /app/www/BookStack-custom_release/* /app/www && \
+  rm -rf /app/www/BookStack-custom_release && \
   echo "**** install composer dependencies ****" && \
   composer install -d /app/www/ && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
